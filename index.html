@@ -3,11 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tietjen Enterprise — Ad Creative for Watch Brands</title>
-    <meta name="description" content="Tietjen Enterprise builds cinematic ad creative for luxury watch brands. Hero films, spec ads, motion design, and AI-driven content engineered to sell timepieces.">
-    <meta property="og:title" content="Tietjen Enterprise — Ad Creative for Watch Brands">
-    <meta property="og:description" content="Cinematic ad creative for luxury watch brands. Hero films, spec ads, motion design.">
+    <title>Tietjen Enterprise — Films &amp; Editorial Campaigns for Watch Brands</title>
+    <meta name="description" content="An independent creative atelier producing cinematic films and editorial campaigns for luxury & independent watch brands — for boutiques, booths, brand sites, and the editorial pages where collectors actually look.">
+    <meta property="og:title" content="Tietjen Enterprise — Films &amp; Editorial Campaigns for Watch Brands">
+    <meta property="og:description" content="Films and editorial campaigns for watch brands — built for the moments that matter: boutiques, booths, brand sites, and editorial press.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tietjen-enterprise.com/">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#08070a">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDCSXCPNB7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PDCSXCPNB7');
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -450,5 +462,75 @@
     </footer>
 
     <script src="script.js" defer></script>
+
+    <!-- GA4 event tracking: CTAs, outbound links, and bookings -->
+    <script>
+        (function () {
+            if (typeof gtag !== 'function') return;
+
+            // Helper: figure out which section/context a clicked element sits in,
+            // so we can tell "nav CTA" apart from "final CTA" apart from "footer CTA".
+            function ctaLocation(el) {
+                var section = el.closest('section, nav, footer, header');
+                if (!section) return 'unknown';
+                return section.id || section.className.split(' ')[0] || section.tagName.toLowerCase();
+            }
+
+            // Tag every "Book a call / Request brief" CTA on the page.
+            document.querySelectorAll('a[href="#book"]').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    gtag('event', 'cta_click', {
+                        cta_location: ctaLocation(link),
+                        cta_text: (link.innerText || '').trim().slice(0, 80)
+                    });
+                });
+            });
+
+            // Tag the portfolio link.
+            document.querySelectorAll('a[href*="drive.google.com"]').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    gtag('event', 'portfolio_click', {
+                        cta_location: ctaLocation(link)
+                    });
+                });
+            });
+
+            // Tag mailto links.
+            document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    gtag('event', 'email_click', {
+                        cta_location: ctaLocation(link)
+                    });
+                });
+            });
+
+            // Listen for booking conversions via postMessage from the embeds.
+            // Tally:    posts an object with type "Tally.FormSubmitted"
+            // Calendly: posts an object with event "calendly.event_scheduled"
+            window.addEventListener('message', function (e) {
+                var data = e.data;
+                if (!data) return;
+
+                // Tally form submission
+                if (typeof data === 'object' && data.event === 'Tally.FormSubmitted') {
+                    gtag('event', 'generate_lead', {
+                        method: 'tally_form',
+                        form_id: data.payload && data.payload.formId
+                    });
+                    return;
+                }
+                // Tally older payload shape (string-encoded JSON)
+                if (typeof data === 'string' && data.indexOf('Tally.FormSubmitted') !== -1) {
+                    gtag('event', 'generate_lead', { method: 'tally_form' });
+                    return;
+                }
+
+                // Calendly booking completed
+                if (typeof data === 'object' && data.event === 'calendly.event_scheduled') {
+                    gtag('event', 'generate_lead', { method: 'calendly' });
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

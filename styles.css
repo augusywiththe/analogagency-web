@@ -555,121 +555,13 @@ button { font-family: inherit; }
 }
 
 /* ============================================================
-   SOLUTION
-   ============================================================ */
-.solution {
-    padding: 160px 0;
-    background: var(--ink-2);
-    position: relative;
-}
-.solution::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 80% 20%, rgba(201,169,97,0.05), transparent 60%);
-    pointer-events: none;
-}
-.solution .container { position: relative; }
-
-.solution-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-}
-
-.solution-card {
-    background: var(--ink-3);
-    border: 1px solid var(--ink-line);
-    padding: 48px;
-    border-radius: var(--radius);
-    transition: all 0.5s var(--ease-out);
-    position: relative;
-    overflow: hidden;
-}
-.solution-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.8s var(--ease-out);
-}
-.solution-card:hover {
-    border-color: var(--gold);
-    transform: translateY(-4px);
-}
-.solution-card:hover::before { transform: translateX(100%); }
-
-.solution-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 32px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--ink-line);
-}
-.solution-num {
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    color: var(--gold);
-    letter-spacing: 0.12em;
-}
-.solution-tag {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    color: var(--bone-dim);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-}
-
-.solution-card h3 {
-    font-family: var(--serif);
-    font-size: 2rem;
-    font-weight: 400;
-    line-height: 1.15;
-    color: var(--bone);
-    margin-bottom: 16px;
-    letter-spacing: -0.01em;
-}
-.solution-card p {
-    font-size: 1rem;
-    color: var(--bone-mute);
-    line-height: 1.7;
-    margin-bottom: 24px;
-    font-weight: 300;
-}
-
-.solution-list {
-    list-style: none;
-    border-top: 1px solid var(--ink-line);
-    padding-top: 20px;
-}
-.solution-list li {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--bone-mute);
-    padding: 8px 0;
-    letter-spacing: 0.02em;
-    position: relative;
-    padding-left: 20px;
-}
-.solution-list li::before {
-    content: '◆';
-    position: absolute;
-    left: 0;
-    color: var(--gold);
-    font-size: 0.55rem;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-/* ============================================================
    WORK
    ============================================================ */
 .work { padding: 160px 0; }
 
 .work-grid {
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     margin-bottom: 56px;
 }
@@ -687,7 +579,8 @@ button { font-family: inherit; }
     transform: translateY(-4px);
     box-shadow: 0 40px 80px rgba(0,0,0,0.6);
 }
-.work-item-feature { aspect-ratio: 16 / 11; }
+/* The lead spec ad runs full width above the two supporting studies. */
+.work-item-feature { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
 .work-item:not(.work-item-feature) { aspect-ratio: 4 / 5; }
 
 .work-item video {
@@ -834,12 +727,13 @@ button { font-family: inherit; }
 
 .booking-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 24px;
     align-items: start;
+    max-width: 720px;
+    margin: 0 auto;
 }
 
-.booking-form-wrapper,
 .booking-calendly {
     background: var(--ink-2);
     border: 1px solid var(--ink-line);
@@ -867,7 +761,6 @@ button { font-family: inherit; }
     color: var(--gold);
     font-size: 1rem;
 }
-.booking-form-wrapper h3,
 .booking-calendly h3 {
     font-family: var(--serif);
     font-size: 1.4rem;
@@ -1062,14 +955,13 @@ button { font-family: inherit; }
     .hero { padding: 130px 0 80px; }
     .hero-headline { font-size: clamp(2.8rem, 9vw, 5rem); }
 
-    .problem-grid, .solution-grid, .process-grid { grid-template-columns: 1fr; }
+    .problem-grid, .process-grid { grid-template-columns: 1fr; }
     .process-grid::before { display: none; }
     .process-grid { gap: 56px; }
 
     .work-grid { grid-template-columns: 1fr; }
     .work-item:not(.work-item-feature) { aspect-ratio: 16 / 11; }
 
-    .booking-grid { grid-template-columns: 1fr; }
 
     .footer-grid { grid-template-columns: 1fr 1fr; }
 }
@@ -1107,12 +999,11 @@ button { font-family: inherit; }
 
     .marquee-track { font-size: 1.4rem; gap: 36px; }
 
-    .problem, .solution, .work, .process, .booking, .faq, .final-cta {
+    .problem, .work, .process, .booking, .faq, .final-cta {
         padding: 100px 0;
     }
 
-    .problem-card, .solution-card { padding: 36px 28px; }
-    .solution-card h3 { font-size: 1.6rem; }
+    .problem-card { padding: 36px 28px; }
     .problem-card h3 { font-size: 1.4rem; }
 
     .work-caption { padding: 20px; }
@@ -1120,7 +1011,7 @@ button { font-family: inherit; }
 
     .process-step h3 { font-size: 1.5rem; }
 
-    .booking-form-wrapper, .booking-calendly { padding: 28px 20px; }
+    .booking-calendly { padding: 28px 20px; }
 
     .faq-question { grid-template-columns: 40px 1fr auto; gap: 16px; padding: 24px 0; }
     .faq-q-text { font-size: 1.1rem; }
@@ -1137,8 +1028,14 @@ button { font-family: inherit; }
     .section-title { font-size: 2rem; }
 }
 
+/* On short viewports the hero frame grows tall enough to reach the absolutely
+   positioned scroll cue. The disciplines row is the content, so the cue yields. */
+@media (max-height: 940px) {
+    .hero-scroll-cue { display: none; }
+}
+
 @media (hover: none) {
-    .problem-card:hover, .solution-card:hover, .work-item:hover {
+    .problem-card:hover, .work-item:hover {
         transform: none;
     }
 }

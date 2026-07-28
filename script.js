@@ -44,18 +44,10 @@
         updateNav();
         window.addEventListener('scroll', updateNav, { passive: true });
 
-        // ============ Geneva clock ============
-        const navTime = document.getElementById('navTime');
-        function tick() {
-            if (!navTime) return;
-            const now = new Date();
-            const geneva = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Zurich' }));
-            const hh = String(geneva.getHours()).padStart(2, '0');
-            const mm = String(geneva.getMinutes()).padStart(2, '0');
-            navTime.textContent = `GENEVA — ${hh}:${mm}`;
-        }
-        tick();
-        setInterval(tick, 30000);
+        // The nav used to run a live Geneva clock. That borrowed a Swiss maison's
+        // authority, which is the opposite of the heritage angle: these brands are
+        // independent and their own origin is the asset. The slot is static markup
+        // now, so there is nothing left to tick.
 
         // ============ Custom cursor ============
         // Self-throttling: only RAF while the mouse is actually moving. When idle,

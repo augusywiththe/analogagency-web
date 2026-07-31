@@ -18,7 +18,49 @@
     <meta property="og:description" content="Everyone makes cinematic ads. I film the origin story, because the brand is everything and the watch is only a part of it.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tietjen-enterprise.com/">
+    <meta property="og:site_name" content="Tietjen Enterprise">
+    <!-- Absolute URL: link scrapers (WhatsApp, iMessage, Slack) will not resolve a relative one. -->
+    <meta property="og:image" content="https://tietjen-enterprise.com/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Reimagining Heritage — Tietjen Enterprise">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://tietjen-enterprise.com/og-image.jpg">
+    <link rel="canonical" href="https://tietjen-enterprise.com/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="author" content="August Tietjen">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Tietjen Enterprise",
+      "url": "https://tietjen-enterprise.com/",
+      "image": "https://tietjen-enterprise.com/og-image.jpg",
+      "description": "Heritage cinematic ads for independent watch brands. I film the origin story.",
+      "email": "wolftietjen@gmail.com",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Los Angeles",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      },
+      "areaServed": "Worldwide",
+      "founder": {
+        "@type": "Person",
+        "name": "August Tietjen",
+        "jobTitle": "Creative Ad Director",
+        "url": "https://tietjen-enterprise.com/#about",
+        "sameAs": [
+          "https://www.linkedin.com/in/august-tietjen/",
+          "https://www.youtube.com/@augustwiththe",
+          "https://www.instagram.com/augustwiththe/"
+        ]
+      },
+      "knowsAbout": ["Cinematic advertising", "Horology", "Brand films", "Independent watch brands"]
+    }
+    </script>
     <meta name="theme-color" content="#08070a">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,9 +98,10 @@
     <!-- HERO -->
     <section class="hero" id="hero">
         <div class="hero-video-wrap" aria-hidden="true">
-            <video class="hero-video" autoplay muted loop playsinline>
-                <source src="assets/omega-spec-ad.mp4" type="video/mp4">
-            </video>
+            <!-- The poster paints immediately; the 24MB clip is attached by script
+                 after load so it never blocks first render. See script.js. -->
+            <video class="hero-video" muted loop playsinline preload="none"
+                   poster="assets/posters/omega.jpg" data-src="assets/omega-spec-ad.mp4"></video>
             <div class="hero-video-tint"></div>
             <div class="hero-vignette"></div>
         </div>
@@ -106,69 +149,22 @@
         </div>
     </section>
 
-    <!-- MARQUEE -->
-    <section class="marquee" aria-hidden="true">
-        <div class="marquee-track">
-            <span>Origin</span><span class="marquee-dot">◆</span>
-            <span>Provenance</span><span class="marquee-dot">◆</span>
-            <span>The First Prototype</span><span class="marquee-dot">◆</span>
-            <span>Workshop</span><span class="marquee-dot">◆</span>
-            <span>Lineage</span><span class="marquee-dot">◆</span>
-            <span>The Archive</span><span class="marquee-dot">◆</span>
-            <span>Founder</span><span class="marquee-dot">◆</span>
-            <span>Independent</span><span class="marquee-dot">◆</span>
-            <span>Origin</span><span class="marquee-dot">◆</span>
-            <span>Provenance</span><span class="marquee-dot">◆</span>
-            <span>The First Prototype</span><span class="marquee-dot">◆</span>
-            <span>Workshop</span><span class="marquee-dot">◆</span>
-            <span>Lineage</span><span class="marquee-dot">◆</span>
-            <span>The Archive</span><span class="marquee-dot">◆</span>
-            <span>Founder</span><span class="marquee-dot">◆</span>
-            <span>Independent</span><span class="marquee-dot">◆</span>
-        </div>
-    </section>
-
-    <!-- PROBLEM -->
-    <section class="problem" id="problem">
-        <div class="container">
-            <div class="section-head">
-                <span class="section-label"><em>01</em> / The Tension</span>
-                <h2 class="section-title">The spec sheet is doing <em>all the talking</em>.</h2>
-            </div>
-            <div class="problem-grid">
-                <article class="problem-card" data-reveal>
-                    <div class="problem-num">i.</div>
-                    <h3>Macro shot. Spec sheet. Repeat.</h3>
-                    <p>Every independent brand posts the same dial macro and the same movement callout. Your buyer scrolls past a watch. They never find out why the brand exists, because nobody has shown them.</p>
-                </article>
-                <article class="problem-card" data-reveal>
-                    <div class="problem-num">ii.</div>
-                    <h3>A product buyer comparison shops.</h3>
-                    <p>Someone who only knows your case diameter will weigh it against four other brands at the same price. Heritage reads as value. Specs read as commodity, and commodity gets negotiated.</p>
-                </article>
-                <article class="problem-card" data-reveal>
-                    <div class="problem-num">iii.</div>
-                    <h3>A launch ad dies with the launch.</h3>
-                    <p>You pay for creative that expires the week the drop sells through. An origin film never expires. It sells the release you have not designed yet.</p>
-                </article>
-            </div>
-        </div>
-    </section>
 
     <!-- WORK -->
     <section class="work" id="work">
         <div class="container">
             <div class="section-head">
-                <span class="section-label"><em>02</em> / Selected Work</span>
+                <span class="section-label"><em>01</em> / Selected Work</span>
                 <h2 class="section-title">Films made <em>on spec</em>.</h2>
                 <p class="section-desc">Spec films, cut before any conversation about money.</p>
             </div>
 
             <div class="work-grid">
-                <figure class="work-item work-item-feature" data-reveal data-cursor="play">
-                    <video autoplay loop muted playsinline>
-                        <source src="assets/brew-metric-spec-ad.mp4" type="video/mp4">
-                    </video>
+                <figure class="work-item work-item-feature" data-reveal>
+                    <video loop muted playsinline preload="none" poster="assets/posters/brew.jpg" data-src="assets/brew-metric-spec-ad.mp4"></video>
+                    <button class="work-play" type="button" aria-label="Play Brew Metric">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                    </button>
                     <figcaption class="work-caption">
                         <div class="work-caption-row">
                             <span class="work-caption-tag">Spec Film</span>
@@ -179,10 +175,11 @@
                     </figcaption>
                 </figure>
 
-                <figure class="work-item" data-reveal data-cursor="play">
-                    <video autoplay loop muted playsinline>
-                        <source src="assets/omega-spec-ad.mp4" type="video/mp4">
-                    </video>
+                <figure class="work-item" data-reveal>
+                    <video loop muted playsinline preload="none" poster="assets/posters/omega.jpg" data-src="assets/omega-spec-ad.mp4"></video>
+                    <button class="work-play" type="button" aria-label="Play Omega Speedmaster Study">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                    </button>
                     <figcaption class="work-caption">
                         <div class="work-caption-row">
                             <span class="work-caption-tag">Spec Film</span>
@@ -193,10 +190,11 @@
                     </figcaption>
                 </figure>
 
-                <figure class="work-item" data-reveal data-cursor="play">
-                    <video autoplay loop muted playsinline>
-                        <source src="assets/chrome-hearts-spec-ad.mp4" type="video/mp4">
-                    </video>
+                <figure class="work-item" data-reveal>
+                    <video loop muted playsinline preload="none" poster="assets/posters/chrome-hearts.jpg" data-src="assets/chrome-hearts-spec-ad.mp4"></video>
+                    <button class="work-play" type="button" aria-label="Play Chrome Hearts Form Study">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                    </button>
                     <figcaption class="work-caption">
                         <div class="work-caption-row">
                             <span class="work-caption-tag">Form Study</span>
@@ -220,11 +218,44 @@
     </section>
 
 
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-portrait" data-reveal>
+                    <!-- Swap in a real portrait at assets/august.jpg. If the file is
+                         absent the frame collapses to a monogram rather than a broken image. -->
+                    <img src="assets/august.jpg" alt="August Tietjen" width="720" height="900"
+                         decoding="async" fetchpriority="low"
+                         onerror="this.closest('.about-portrait').classList.add('is-empty');this.remove();">
+                    <span class="about-portrait-fallback" aria-hidden="true">AT</span>
+                    <span class="about-portrait-tag">Los Angeles</span>
+                </div>
+
+                <div class="about-body">
+                    <span class="section-label"><em>02</em> / The Maker</span>
+                    <h2 class="section-title">I'm <em>August Tietjen</em>.</h2>
+                    <p class="about-role">Creative Ad Director <span>Los Angeles</span></p>
+                    <p>I started this because I kept watching brands I admired get sold like spec sheets. Years of someone's life, flattened into case diameter and movement type.</p>
+                    <p>Direction, motion, edit, and grade all stay under one roof. The cut you approve is the cut that ships, with nothing lost in a handoff between people who never spoke to you.</p>
+                    <p>Every project opens the same way. I ask why you started the brand, and most founders tell me nobody has asked before. The answer is almost always the film.</p>
+                    <div class="about-marks">
+                        <span class="about-mark"><em>Est.</em> 2024</span>
+                        <span class="about-mark"><em>Based</em> Los Angeles</span>
+                        <span class="about-mark"><em>Focus</em> Independent &amp; micro brands</span>
+                        <span class="about-mark"><em>Scope</em> Direction, motion, edit, grade</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- PROCESS -->
     <section class="process" id="process">
         <div class="container">
             <div class="section-head section-head-centered">
-                <span class="section-label"><em>03</em> / Engagement</span>
+                <span class="section-label"><em>03</em> / Services</span>
                 <h2 class="section-title">How <em>this works</em>.</h2>
             </div>
 
@@ -254,13 +285,58 @@
             <div class="section-head section-head-centered">
                 <span class="section-label"><em>04</em> / Begin</span>
                 <h2 class="section-title">Tell me <em>why you started</em>.</h2>
-                <p class="section-desc">Thirty minutes, no deck. Open by telling me how the brand began.</p>
+                <p class="section-desc">Send a message or book the call. Open by telling me how the brand began.</p>
             </div>
 
-            <div class="booking-grid">
+            <div class="booking-grid booking-grid-split">
+                <div class="booking-form-wrapper">
+                    <div class="booking-card-head">
+                        <span class="booking-card-num">A</span>
+                        <h3>Send a Message</h3>
+                    </div>
+                    <!-- Web3Forms: paste the free key from web3forms.com into WEB3FORMS_KEY
+                         in script.js. Until then the form falls back to opening an email. -->
+                    <form class="brief-form" id="briefForm" novalidate
+                          action="https://api.web3forms.com/submit" method="POST">
+                        <!-- Native action + hidden key means the form still delivers
+                             with JS disabled. The fetch handler in script.js intercepts
+                             it for inline validation and a success message. -->
+                        <input type="hidden" name="access_key" value="0f6114a5-157f-43f8-ae6f-12cf0d306cf4">
+                        <input type="hidden" name="subject" value="New brief from tietjen-enterprise.com">
+                        <label class="field">
+                            <span class="field-label">Your name</span>
+                            <input type="text" name="name" required autocomplete="name" placeholder="Jane Okafor">
+                            <span class="field-error" data-for="name"></span>
+                        </label>
+                        <label class="field">
+                            <span class="field-label">Brand</span>
+                            <input type="text" name="brand" required placeholder="Lorier, Nodus, your own">
+                            <span class="field-error" data-for="brand"></span>
+                        </label>
+                        <label class="field">
+                            <span class="field-label">Email</span>
+                            <input type="email" name="email" required autocomplete="email" placeholder="you@brand.com">
+                            <span class="field-error" data-for="email"></span>
+                        </label>
+                        <label class="field">
+                            <span class="field-label">Why did you start the brand?</span>
+                            <textarea name="message" rows="4" required placeholder="However short. This is the part I actually want to know."></textarea>
+                            <span class="field-error" data-for="message"></span>
+                        </label>
+                        <!-- Honeypot: bots fill every field, humans never see this one.
+                             Web3Forms drops any submission where botcheck is set. -->
+                        <input type="checkbox" name="botcheck" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <button type="submit" class="btn btn-primary form-submit">
+                            <span>Send</span>
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+
                 <div class="booking-calendly">
                     <div class="booking-card-head">
-                        <span class="booking-card-num">◆</span>
+                        <span class="booking-card-num">B</span>
                         <h3>Schedule a Call</h3>
                     </div>
                     <div class="calendly-placeholder" id="calendlyEmbed">
@@ -377,6 +453,7 @@
                 <div class="footer-col">
                     <span class="footer-col-label">Atelier</span>
                     <a href="#work">Work</a>
+                    <a href="#about">About</a>
                     <a href="#faq">FAQ</a>
                 </div>
 
@@ -391,6 +468,7 @@
                     <span class="footer-col-label">Contact</span>
                     <a href="#book">Book Call</a>
                     <a href="mailto:wolftietjen@gmail.com">wolftietjen@gmail.com</a>
+                    <span class="footer-loc">Los Angeles, CA</span>
                 </div>
             </div>
 

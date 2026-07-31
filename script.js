@@ -44,10 +44,10 @@
         updateNav();
         window.addEventListener('scroll', updateNav, { passive: true });
 
-        // The nav used to run a live Geneva clock. That borrowed a Swiss maison's
-        // authority, which is the opposite of the heritage angle: these brands are
-        // independent and their own origin is the asset. The slot is static markup
-        // now, so there is nothing left to tick.
+        // The nav slot used to run a live clock pinned to a Swiss timezone. That
+        // borrowed a maison's authority, which is the opposite of the heritage
+        // angle: these brands are independent and their own origin is the asset.
+        // The slot is static markup now, so there is nothing left to tick.
 
         // ============ Custom cursor ============
         // Self-throttling: only RAF while the mouse is actually moving. When idle,
@@ -169,6 +169,143 @@
             // Hero video parallax removed — scrub-driven transforms on a 25MB
             // looping video cost too many paints per scroll event. The vignette
             // + tint already give the cinematic feel without movement.
+        }
+
+        // ============ Hero video: attach after load ============
+        // The clip is ~24MB. Leaving it in the markup meant it competed with
+        // first paint; the poster covers the gap and the source lands later.
+        const heroVideo = document.querySelector('.hero-video[data-src]');
+        if (heroVideo && !prefersReducedMotion) {
+            const attachHero = () => {
+                heroVideo.src = heroVideo.dataset.src;
+                heroVideo.load();
+                heroVideo.play().catch(() => { /* poster stays; no autoplay allowed */ });
+            };
+            if (document.readyState === 'complete') setTimeout(attachHero, 250);
+            else window.addEventListener('load', () => setTimeout(attachHero, 250));
+        }
+
+        // ============ Reel: click-to-play covers ============
+        // Nothing in the reel downloads until a visitor asks for it.
+        document.querySelectorAll('.work-play').forEach(btn => {
+            const item = btn.closest('.work-item');
+            const video = item && item.querySelector('video[data-src]');
+            if (!video) return;
+
+            btn.addEventListener('click', () => {
+                if (!video.src) {
+                    video.src = video.dataset.src;
+                    video.load();
+                }
+                video.play().then(() => {
+                    item.classList.add('is-playing');
+                    if (typeof gtag === 'function') {
+                        const title = item.querySelector('h3');
+                        gtag('event', 'work_play', {
+                            work_title: title ? title.textContent.trim() : 'unknown'
+                        });
+                    }
+                }).catch(() => {});
+            });
+        });
+
+        // ============ Brief form ============
+        // Paste the free key from web3forms.com here. While it is the placeholder
+        // the form degrades to an email draft instead of silently failing.
+        const WEB3FORMS_KEY = '0f6114a5-157f-43f8-ae6f-12cf0d306cf4';
+        const CONTACT_EMAIL = 'wolftietjen@gmail.com';
+
+        const briefForm = document.getElementById('briefForm');
+        const formStatus = document.getElementById('formStatus');
+
+        if (briefForm) {
+            const setError = (field, msg) => {
+                const wrap = field.closest('.field');
+                wrap.classList.toggle('has-error', Boolean(msg));
+                const slot = wrap.querySelector('.field-error');
+                if (slot) slot.textContent = msg || '';
+            };
+
+            const validate = () => {
+                let ok = true;
+                briefForm.querySelectorAll('input:not([name="botcheck"]):not([type="hidden"]), textarea').forEach(f => {
+                    const v = f.value.trim();
+                    let msg = '';
+                    if (!v) msg = 'This one is required.';
+                    else if (f.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+                        msg = 'That email does not look right.';
+                    }
+                    if (msg) ok = false;
+                    setError(f, msg);
+                });
+                return ok;
+            };
+
+            briefForm.querySelectorAll('input:not([type="hidden"]), textarea').forEach(f => {
+                f.addEventListener('input', () => setError(f, ''));
+            });
+
+            briefForm.addEventListener('submit', async e => {
+                e.preventDefault();
+                formStatus.className = 'form-status';
+                // Honeypot tripped → pretend success, drop the message.
+                if (briefForm.querySelector('[name="botcheck"]').checked) {
+                    briefForm.reset();
+                    formStatus.textContent = 'Sent. I reply within one business day.';
+                    formStatus.classList.add('is-ok');
+                    return;
+                }
+
+                if (!validate()) {
+                    formStatus.textContent = 'Check the highlighted fields.';
+                    formStatus.classList.add('is-bad');
+                    return;
+                }
+
+                const data = Object.fromEntries(new FormData(briefForm).entries());
+                const submit = briefForm.querySelector('.form-submit');
+
+                // No key yet → hand the message to their mail client rather than
+                // dropping it into a void.
+                if (WEB3FORMS_KEY === 'YOUR_ACCESS_KEY_HERE') {
+                    const subject = encodeURIComponent(`Brief from ${data.brand}`);
+                    const body = encodeURIComponent(
+                        `Name: ${data.name}\nBrand: ${data.brand}\nEmail: ${data.email}\n\n${data.message}`
+                    );
+                    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+                    formStatus.textContent = 'Opening your email app.';
+                    return;
+                }
+
+                submit.setAttribute('disabled', '');
+                formStatus.textContent = 'Sending.';
+
+                try {
+                    const res = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                        body: JSON.stringify({
+                            access_key: WEB3FORMS_KEY,
+                            subject: `Brief from ${data.brand}`,
+                            ...data
+                        })
+                    });
+                    const json = await res.json();
+                    if (!json.success) throw new Error(json.message || 'failed');
+
+                    briefForm.reset();
+                    formStatus.textContent = 'Sent. I reply within one business day.';
+                    formStatus.classList.add('is-ok');
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'generate_lead', { method: 'brief_form' });
+                    }
+                } catch (err) {
+                    formStatus.textContent = `That did not send. Email me at ${CONTACT_EMAIL}.`;
+                    formStatus.classList.add('is-bad');
+                } finally {
+                    submit.removeAttribute('disabled');
+                }
+            });
         }
 
         // ============ FAQ accordion ============
